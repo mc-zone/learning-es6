@@ -1,14 +1,13 @@
 'use strict';
 
-let funcName = 'getSex';
 class Person{
 	constructor(name,sex){
 		this.name = name;
 		this.sex = sex;
 	};
 
-	getName(){
-		return this.name;
+	getSex(){
+		return this.sex;
 	};
 	
 	setAge(age){
@@ -19,14 +18,16 @@ class Person{
 		return this.age;
 	};
 
-	[funcName](){
-		return this.sex;
-	}	
+	//static
+	static getTime(){
+		return Date.now();
+	}
 };
 
 let person = new Person('zhang');
 person.setAge(15);
 console.log(person.getAge());
+console.log(Person.getTime());
 
 //枚举
 Person.prototype.getName = function() {
@@ -44,50 +45,47 @@ class Teacher extends Person{
 
 let teacher = new Teacher('wang','female','English');
 console.log(teacher.getName());
+console.log(Teacher.getTime());//static
 
 //获取父类
 console.log( Object.getPrototypeOf(Teacher) === Person );
 
 //继承原生类
 class MyArray extends Array {
-  constructor(...args) {
-    super(...args);
+  constructor() {
+    super();
   }
 }
 
 var arr = new MyArray();
 arr[0] = 12;
-arr.length // 1
+console.log( arr.length );
 
 arr.length = 0;
-arr[0] // undefined
-
+console.log( arr[0] );
 
 //get set
-class Make {
-	constructor(prop){
-		this.prop = prop;
-	};
+class Square {
+	constructor(width){
+		this.width = width;
+	}
+	get area(){
+		console.log('try to get area ');
+		return this.width*this.width;
+	}
 
-	get(key){
-		console.log('try to get '+key);
-		return this.key;
-	};
-	set(key,val){
-		this[key] = val;
-		console.log('try to set '+key+'to:',val);
-	};
+	set area(val){
+		console.log('set area as:',val);
+		this.width = Math.sqrt(val);
+		console.log('width changed to:',this.width);
 
-	get prop(){
-		console.log('prop is:',prop);
-		return this.prop;
-	};
-
-	set prop(val){
-		this.prop = val;
-		console.log('set prop as:',val);
-	};
+	}
 };
 
-var 
+let sq = new Square(20);
+console.log(sq.area);
+sq.area = 100;
 
+//get set 在descriptor对象上
+var descriptor = Object.getOwnPropertyDescriptor(Square.prototype, "area");
+console.log(descriptor);
