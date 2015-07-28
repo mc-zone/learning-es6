@@ -1,7 +1,4 @@
 "use strict"
-//let must
-
-//process.exit(0);
 
 //仅块内有效
 if(true){
